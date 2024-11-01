@@ -1,29 +1,23 @@
 class WordsFinder:
     def __init__(self, *file_name):
-        self.file_name = list(*file_name)
+        self.file_name = [*file_name]
 
     def get_all_words(self):  # метод, который возвращает словарь следующего вида:
         # {'file1.txt': ['word1', 'word2'], 'file2.txt': ['word3', 'word4'], 'file3.txt': ['word5', 'word6', 'word7']}
         all_words = {}
         for file_name in self.file_name:
-            with open(file_name, 'r', encoding='utf-8') as file:
-                words = []
-                for line in file:
-                    line = line.lower()
+            with open(file_name,'r',encoding='utf-8') as file:
+                info=file.read().lower()
                 for p in [',', '.', '=', '!', '?', ';', ':', ' - ']:
-                    if p in line:
-                        line = line.replace(p, '')
-                line = line.replace(' - ', ' ')
-                line.split()
-                words.extend(line.split())
-        all_words[file_name] = words
+                    info = info.replace(p, '')
+
+                all_words[file_name] = info.split()
         return all_words
 
-    def find(self,
-             word):  # Возвращает словарь, где ключ - название файла, значение - позиция первого такого слова в списке слов этого файла.
+    def find(self, word):  # Возвращает словарь, где ключ - название файла, значение - позиция первого такого слова в списке слов этого файла.
         t = {}
         for name, words in self.get_all_words().items():
-            if word in words:
+            if word.lower() in words:
                 t[name] = words.index(word.lower()) + 1
             return t
 
