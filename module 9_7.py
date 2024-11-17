@@ -1,17 +1,23 @@
 def is_prime(func):
     def wrapper(*args):
         n = func(*args)
+        f=True
         if n <= 1:
-            print('Составное')
+            f = False
         if n == 2:
-            print('Простое')
+            f = True
         if n % 2 == 0:
-            print('Составное')
+            f = False
         for i in range(3, int(n ** 0.5) + 1, 2):
             if n % i == 0:
-                print('Составное')
+                f = False
+        if f:
             print('Простое')
+        else:
+            print('Составное')
+
         return n
+
     return wrapper
 
 
@@ -20,5 +26,5 @@ def sum_three(*args):
     return sum(args)
 
 
-result = sum_three(2, 3, 6)
+result = sum_three(3, 3, 3)
 print(result)
